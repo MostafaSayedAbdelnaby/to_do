@@ -1,20 +1,26 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do/providers/my_provider.dart';
 import 'package:to_do/theme/dark_theme.dart';
 import 'package:to_do/theme/light_theme.dart';
 import 'package:to_do/theme/theme.dart';
 
-import 'introduction_screen.dart';
+import 'screens/introduction_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   runApp(
-    EasyLocalization(
-      supportedLocales: [Locale('en'),Locale('ar')],
-      path: 'assets/translations',
-      fallbackLocale: Locale('en'),
-      child: MyApp(),
+    ChangeNotifierProvider(
+      // I'm create MyProvider to knows all Screen on it
+      create: (context) => MyProvider(),
+      child: EasyLocalization(
+        supportedLocales: [Locale('en'), Locale('ar')],
+        path: 'assets/translations',
+        fallbackLocale: Locale('en'),
+        child: MyApp(),
+      ),
     ),
   );
 }
@@ -25,6 +31,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<MyProvider>(
+        context); // create object provider from MyProvider to used in ThemeMode & listen on ThemeMode
     BaseTheme lightTheme = LightTheme();
     BaseTheme darkTheme = DarkTheme();
     return MaterialApp(
@@ -34,7 +42,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: lightTheme.themeData,
       darkTheme: darkTheme.themeData,
-      themeMode: ThemeMode.light,
+      // provider.themeMode in class MyProvider
+      themeMode: provider.themeMode,
       routes: {
         IntroductionScreen.routeName: (context) => IntroductionScreen(),
       },

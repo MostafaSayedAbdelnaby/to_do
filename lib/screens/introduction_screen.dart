@@ -2,15 +2,24 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do/providers/my_provider.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
-class IntroductionScreen extends StatelessWidget {
+class IntroductionScreen extends StatefulWidget {
   static const String routeName = "IntroductionScreen";
 
   const IntroductionScreen({super.key});
 
   @override
+  State<IntroductionScreen> createState() => _IntroductionScreenState();
+}
+
+class _IntroductionScreenState extends State<IntroductionScreen> {
+  @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<MyProvider>(
+        context); // create object provider from MyProvider to used in ThemeMode & listen on ThemeMode
     return Scaffold(
       appBar: AppBar(
         title: Image.asset("assets/images/app_logo.png"),
@@ -62,8 +71,11 @@ class IntroductionScreen extends StatelessWidget {
                   ],
                   iconSize: 30.0,
                   activeBgColors: [
-                    [Theme.of(context).primaryColor, Theme.of(context).secondaryHeaderColor],
-                    [Colors.yellow, Colors.orange]
+                    [
+                      Theme.of(context).primaryColor,
+                      Theme.of(context).secondaryHeaderColor
+                    ],
+                    const [Colors.yellow, Colors.orange]
                   ],
                   animate: true,
                   // with just animate set to true, default curve = Curves.easeIn
@@ -71,9 +83,9 @@ class IntroductionScreen extends StatelessWidget {
                   // animate must be set to true when using custom curve
                   onToggle: (index) {
                     if (index == 1) {
-                      context.setLocale(Locale('ar'));
+                      context.setLocale(const Locale('ar'));
                     } else {
-                      context.setLocale(Locale('en'));
+                      context.setLocale(const Locale('en'));
                     }
                     // print('switched to: $index');
                   },
@@ -89,26 +101,31 @@ class IntroductionScreen extends StatelessWidget {
                 ToggleSwitch(
                   minWidth: 73.0,
                   minHeight: 30.0,
-                  initialLabelIndex: 0,
+                  initialLabelIndex:
+                      provider.themeMode == ThemeMode.light ? 0 : 1,
                   cornerRadius: 20.0,
                   activeFgColor: Colors.white,
                   inactiveBgColor: Colors.grey,
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
-                  icons: [
-                    FontAwesomeIcons.flagUsa,
-                    MdiIcons.abjadArabic,
+                  icons: const [
+                    FontAwesomeIcons.sun,
+                    FontAwesomeIcons.moon,
                   ],
                   iconSize: 30.0,
                   activeBgColors: [
-                    [Colors.black45, Colors.black26],
-                    [Colors.yellow, Colors.orange]
+                    [
+                      Theme.of(context).primaryColor,
+                      Theme.of(context).secondaryHeaderColor
+                    ],
+                    const [Colors.yellow, Colors.orange]
                   ],
                   animate: true,
                   // with just animate set to true, default curve = Curves.easeIn
                   curve: Curves.bounceInOut,
                   // animate must be set to true when using custom curve
                   onToggle: (index) {
+                    provider.changeTheme();
                     // print('switched to: $index');
                   },
                 ),
