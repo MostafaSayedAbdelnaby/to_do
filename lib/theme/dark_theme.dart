@@ -15,6 +15,7 @@ class DarkTheme extends BaseTheme{
   @override
   ThemeData get themeData => ThemeData(
     primaryColor: primaryColor,
+    focusColor: primaryColor, // for TextField
     scaffoldBackgroundColor: backgroundColor,
     appBarTheme: AppBarTheme(
       centerTitle: true,

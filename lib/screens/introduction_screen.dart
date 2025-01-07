@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/providers/my_provider.dart';
+import 'package:to_do/screens/login_screen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
 class IntroductionScreen extends StatefulWidget {
@@ -133,7 +134,9 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
             ),
             const SizedBox(height: 16),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pushNamed(context, LoginScreen.routeName);
+              },
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   shape: RoundedRectangleBorder(
@@ -145,7 +148,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
                       .textTheme
                       .titleMedium!
                       .copyWith(color: Colors.white)),
-            )
+            ),
           ],
         ),
       ),

@@ -15,6 +15,7 @@ class LightTheme extends BaseTheme {
   @override
   ThemeData get themeData => ThemeData(
         primaryColor: primaryColor,
+        focusColor: Color(0xFF7B7B7B),  // for border of TextField
         scaffoldBackgroundColor: backgroundColor,
         appBarTheme: AppBarTheme(
           centerTitle: true,
