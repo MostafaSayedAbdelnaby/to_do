@@ -2,7 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do/providers/my_provider.dart';
+import 'package:to_do/screens/forget_password.dart';
+import 'package:to_do/screens/home_screen.dart';
 import 'package:to_do/screens/login_screen.dart';
+import 'package:to_do/screens/register_screen.dart';
 import 'package:to_do/theme/dark_theme.dart';
 import 'package:to_do/theme/light_theme.dart';
 import 'package:to_do/theme/theme.dart';
@@ -48,7 +51,10 @@ class MyApp extends StatelessWidget {
       routes: {
         IntroductionScreen.routeName: (context) => IntroductionScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
-        // LoginScreen.routeName: (context) => LoginScreen(),
+        RegisterScreen.routeName: (context) => RegisterScreen(),
+        ForgetPasswordScreen.routeName: (context) => ForgetPasswordScreen(),
+        HomeScreen.routeName: (context) => HomeScreen(),
+
       },
       initialRoute:
           IntroductionScreen.routeName,

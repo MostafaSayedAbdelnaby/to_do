@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:to_do/screens/forget_password.dart';
-import 'package:to_do/screens/register_screen.dart';
+import 'package:to_do/screens/login_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  static const String routeName = "LoginScreen";
+class RegisterScreen extends StatelessWidget {
+  static const String routeName = "RegisterScreen";
 
-  const LoginScreen({super.key});
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var nameController = TextEditingController();
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
+    var rePasswordController = TextEditingController();
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text("Register",style: Theme.of(context).textTheme.titleMedium,),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: Column(
@@ -26,6 +29,38 @@ class LoginScreen extends StatelessWidget {
               height: 150,
             ),
             const SizedBox(height: 24),
+            TextField(
+              controller: nameController,
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    color: Theme.of(context).focusColor,
+                  ),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide:
+                      BorderSide(width: 2, color: Theme.of(context).focusColor),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide:
+                      BorderSide(width: 2, color: Theme.of(context).focusColor),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide:
+                      BorderSide(width: 2, color: Theme.of(context).focusColor),
+                ),
+                labelText: "Name",
+                labelStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      color: Theme.of(context).focusColor,
+                    ),
+                prefixIcon: const Icon(
+                  Icons.person,
+                  color: Color(0xFF7B7B7B),
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
             TextField(
               controller: emailController,
               style: Theme.of(context).textTheme.titleSmall!.copyWith(
@@ -98,21 +133,46 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            InkWell(
-              onTap: (){
-                Navigator.pushNamed(context, ForgetPasswordScreen.routeName);
-              },
-              child: Text(
-                "Forget Password?",
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      color: Theme.of(context).primaryColor,
-                      decoration: TextDecoration.underline,
-                      decorationColor: Theme.of(context).primaryColor,
+            TextField(
+              controller: rePasswordController,
+              obscureText: true,
+              // to enable hiding of Password
+              obscuringCharacter: "#",
+              // if I'm hide Password by # without *
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                    color: Theme.of(context).focusColor,
+                  ),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide:
+                      BorderSide(width: 2, color: Theme.of(context).focusColor),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide:
+                      BorderSide(width: 2, color: Theme.of(context).focusColor),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(16),
+                  borderSide:
+                      BorderSide(width: 2, color: Theme.of(context).focusColor),
+                ),
+                labelText: "Re Password",
+                labelStyle: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      color: Theme.of(context).focusColor,
                     ),
-                textAlign: TextAlign.end,
+                prefixIcon: const Icon(
+                  Icons.lock_rounded,
+                  color: Color(0xFF7B7B7B),
+                ),
+                suffixIcon: const Icon(
+                  Icons.remove_red_eye,
+                  color: Color(0xFF7B7B7B),
+                ),
               ),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 // Navigator.pushNamed(context, LoginScreen.routeName);
@@ -123,62 +183,37 @@ class LoginScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   backgroundColor: Theme.of(context).primaryColor),
-              child: Text("Login",
+              child: Text("Create Account",
                   // "login".tr(),
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium!
                       .copyWith(color: Colors.white)),
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             InkWell(
-             onTap: (){
-               Navigator.pushNamed(context, RegisterScreen.routeName);
-             },
+              onTap: () {
+                Navigator.pushNamed(context, LoginScreen.routeName);
+              },
               child: Text.rich(
                 textAlign: TextAlign.center,
                 TextSpan(children: [
                   TextSpan(
-                      text: "Don’t Have Account ? ",
+                      text: "Already Have Account ? ",
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                        fontSize: 14,
-                      )),
+                            fontSize: 14,
+                          )),
                   TextSpan(
-                      text: "Create Account",
+                      text: "Login",
                       style: Theme.of(context).textTheme.titleSmall!.copyWith(
                             // fontSize: 18,
                             color: Theme.of(context).primaryColor,
                             decoration: TextDecoration.underline,
                             decorationColor: Theme.of(context).primaryColor,
-                          ),),
+                          )),
                 ]),
               ),
             ),
-            const SizedBox(height: 24),
-            Row(
-              children: [
-                Expanded(
-                  child: Divider(
-                     indent: 40,
-                    endIndent: 10,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                Text(
-                  "Or",
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: Theme.of(context).primaryColor
-                  ),
-                ),
-                Expanded(
-                  child: Divider(
-                    indent: 10,
-                    endIndent: 40,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
-              ],
-            )
           ],
         ),
       ),
