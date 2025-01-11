@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 // put in this class Anything done listening from any file || any things
+/// put all Logics in Provider
 class MyProvider extends ChangeNotifier {
   // all Screens are listen to ThemeMode if light Or dark.
   ThemeMode themeMode = ThemeMode.light; // default value light

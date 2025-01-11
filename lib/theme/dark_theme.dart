@@ -17,6 +17,16 @@ class DarkTheme extends BaseTheme{
     primaryColor: primaryColor,
     focusColor: primaryColor, // for TextField
     scaffoldBackgroundColor: backgroundColor,
+    floatingActionButtonTheme: FloatingActionButtonThemeData(
+        backgroundColor: primaryColor,
+        shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(35),
+            borderSide: const BorderSide(
+              color: Colors.white,
+              width: 4,
+            )
+        )
+    ),
     appBarTheme: AppBarTheme(
       centerTitle: true,
       backgroundColor: backgroundColor,
@@ -26,6 +36,8 @@ class DarkTheme extends BaseTheme{
       showSelectedLabels: true,
       showUnselectedLabels: true,
       selectedItemColor: Colors.white,
+      unselectedItemColor: Colors.white,
+      type: BottomNavigationBarType.fixed,
       backgroundColor: backgroundColor,
     ),
     textTheme: TextTheme(

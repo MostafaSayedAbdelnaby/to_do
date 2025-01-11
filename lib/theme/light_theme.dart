@@ -15,8 +15,19 @@ class LightTheme extends BaseTheme {
   @override
   ThemeData get themeData => ThemeData(
         primaryColor: primaryColor,
-        focusColor: Color(0xFF7B7B7B),  // for border of TextField
+        focusColor: const Color(0xFF7B7B7B),  // for border of TextField
         scaffoldBackgroundColor: backgroundColor,
+        // the next line for the Icon where in HomeScreen
+        floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: primaryColor,
+          shape: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(35),
+            borderSide: const BorderSide(
+              color: Colors.white,
+              width: 4,
+            )
+          )
+        ),
         appBarTheme: AppBarTheme(
           centerTitle: true,
           backgroundColor: backgroundColor,
@@ -25,6 +36,8 @@ class LightTheme extends BaseTheme {
           showSelectedLabels: true,
           showUnselectedLabels: true,
           selectedItemColor: Colors.white,
+          unselectedItemColor: Colors.white,
+          type: BottomNavigationBarType.fixed,
           backgroundColor: primaryColor,
         ),
         textTheme: TextTheme(

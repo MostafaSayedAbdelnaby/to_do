@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do/screens/forget_password.dart';
+import 'package:to_do/screens/home/home.dart';
 import 'package:to_do/screens/register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -115,7 +116,7 @@ class LoginScreen extends StatelessWidget {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
-                // Navigator.pushNamed(context, LoginScreen.routeName);
+                Navigator.pushNamed(context, HomeScreen.routeName);
               },
               style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -178,6 +179,26 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+            const SizedBox(height: 24),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset("assets/images/image_google.png"),
+                  const SizedBox(width: 8,),
+                  Text("Login With Google",style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: Theme.of(context).primaryColor,
+                  ),),
+                ],
+              ),
             )
           ],
         ),
