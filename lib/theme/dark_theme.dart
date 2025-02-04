@@ -14,6 +14,8 @@ class DarkTheme extends BaseTheme{
 
   @override
   ThemeData get themeData => ThemeData(
+    splashColor: backgroundColor, // for OnboardingScreen
+    primaryColorLight: backgroundColor, // for globalBackgroundColor in OnboardingScreen
     primaryColor: primaryColor,
     focusColor: primaryColor, // for TextField
     scaffoldBackgroundColor: backgroundColor,

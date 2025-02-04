@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do/screens/create_event.dart';
 import 'package:to_do/screens/home/tabs/home_tab/home_tab.dart';
-import 'package:to_do/screens/home/tabs/love_tab.dart';
+import 'package:to_do/screens/home/tabs/favorite_tab.dart';
 import 'package:to_do/screens/home/tabs/map_tab.dart';
 import 'package:to_do/screens/home/tabs/profile_tab.dart';
 
@@ -23,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
+        /// enableFeedback: true,
         onPressed: () {
           Navigator.pushNamed(context, CreateEvent.routeName);
         },
@@ -34,7 +34,8 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavigationBar(
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.location_on_outlined), label: "Map"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.location_on_outlined), label: "Map"),
           BottomNavigationBarItem(
               icon: Icon(Icons.favorite_border), label: "Love"),
           BottomNavigationBarItem(
@@ -52,8 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> tabs = [
     HomeTab(),
-    MapTab(),
-    LoveTab(),
-    ProfileTab(),
+    const MapTab(),
+    const FavoriteScreen(),
+    const ProfileTab(),
   ];
 }

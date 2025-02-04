@@ -1,12 +1,37 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:to_do/firebase/firebase_manager.dart';
+import 'package:to_do/providers/auth_provider.dart';
+import '../../../../model/task_model.dart';
 import 'event_item.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
 
   @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  List<String> eventCategories = [
+    "All",
+    "birthday",
+    "book_club",
+    "sport",
+    "eating",
+    "exhibtion",
+    "gaming",
+    "meeting",
+    "workshop",
+    "holiday",
+  ];
+
+  int selectedCategory = 0;
+
+  @override
   Widget build(BuildContext context) {
+    var authProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
@@ -14,10 +39,11 @@ class HomeTab extends StatelessWidget {
         leading: const SizedBox(),
         backgroundColor: Theme.of(context).primaryColor,
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          bottomRight: Radius.circular(24),
-          bottomLeft: Radius.circular(24),
-        )),
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(24),
+            bottomLeft: Radius.circular(24),
+          ),
+        ),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -29,7 +55,7 @@ class HomeTab extends StatelessWidget {
                   ),
             ),
             Text(
-              "John Safwat",
+              "${authProvider.userModel?.name}",
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
                     color: Colors.white,
                   ),
@@ -63,10 +89,11 @@ class HomeTab extends StatelessWidget {
           backgroundColor: Theme.of(context).primaryColor,
           leading: const SizedBox(),
           shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(24),
-            bottomLeft: Radius.circular(24),
-          )),
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(24),
+              bottomLeft: Radius.circular(24),
+            ),
+          ),
           title: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -80,28 +107,82 @@ class HomeTab extends StatelessWidget {
                           .copyWith(fontSize: 14, color: Colors.white)),
                 ],
               ),
-              Container(
-                height: 50,
-                // color: Colors.red,
+              const SizedBox(height: 6),
+              SizedBox(
+                height: 40,
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => const SizedBox(
+                    width: 16,
+                  ),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      borderRadius: BorderRadius.circular(18),
+                      onTap: () {
+                        selectedCategory = index;
+                        setState(() {});
+                      },
+                      child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            color: selectedCategory == index
+                                ? Colors.white
+                                : Colors.transparent,
+                            border: Border.all(color: Colors.white),
+                            borderRadius: BorderRadius.circular(
+                              18,
+                            ),
+                          ),
+                          child: Text(
+                            eventCategories[index],
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleSmall!
+                                .copyWith(
+                                    color: selectedCategory == index
+                                        ? Colors.black
+                                        : Colors.white),
+                          )),
+                    );
+                  },
+                  itemCount: eventCategories.length,
+                ),
               )
             ],
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView.separated(
-          separatorBuilder: (context, index) {
-            return const SizedBox(
-              height: 16,
+      body: StreamBuilder<QuerySnapshot<TaskModel>>(
+          stream: FirebaseManager.getEvent(eventCategories[selectedCategory]),
+          builder: (context, snapshot) {
+            // if I'm connect on data ,appears show for mini second
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (snapshot.hasError) {
+              return const Center(
+                  child: Text("Something went wrong , Please try again"));
+            }
+            if (snapshot.data!.docs.isEmpty) {
+              return const Center(child: Text("No Tasks"));
+            }
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.separated(
+                separatorBuilder: (context, index) {
+                  return const SizedBox(
+                    height: 16,
+                  );
+                },
+                itemBuilder: (context, index) {
+                  return EventItem(
+                    model: snapshot.data!.docs[index].data(),
+                  );
+                },
+                itemCount: snapshot.data?.docs.length ?? 0,
+              ),
             );
-          },
-          itemBuilder: (context, index) {
-            return EventItem();
-          },
-          itemCount: 10,
-        ),
-      ),
+          }),
     );
   }
 }

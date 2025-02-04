@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 class CategoryEventItem extends StatelessWidget {
   String text;
   bool isSelected;
-  CategoryEventItem({required this.text,required this.isSelected,super.key});
+
+  CategoryEventItem({required this.text, required this.isSelected, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +15,14 @@ class CategoryEventItem extends StatelessWidget {
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(22),
           border: Border.all(color: Theme.of(context).primaryColor),
-          color: isSelected ? Theme.of(context).primaryColor : Colors.transparent ),
-      child: Text(text,
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium!
-              .copyWith(
-            color: isSelected ? Colors.white: Theme.of(context).primaryColor
-          )),
+          color:
+              isSelected ? Theme.of(context).primaryColor : Colors.transparent,
+      ),
+      child: Text(
+        text,
+        style: Theme.of(context).textTheme.titleMedium!.copyWith(
+            color: isSelected ? Colors.white : Theme.of(context).primaryColor),
+      ),
     );
   }
 }
